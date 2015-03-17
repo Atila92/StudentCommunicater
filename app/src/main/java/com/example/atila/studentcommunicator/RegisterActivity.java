@@ -56,7 +56,6 @@ public class RegisterActivity extends Activity implements LoaderCallbacks<Cursor
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        System.out.println("HHEEEEYY");
         setContentView(R.layout.activity_register);
 
         // Set up the login form.

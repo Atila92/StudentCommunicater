@@ -1,5 +1,8 @@
 package com.example.atila.studentcommunicator;
 
+import android.location.Criteria;
+import android.location.Location;
+import android.location.LocationManager;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 
@@ -10,13 +13,16 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 public class MapsActivity extends FragmentActivity {
 
-    private GoogleMap mMap; // Might be null if Google Play services APK is not available.
+    GoogleMap mMap; // Might be null if Google Play services APK is not available.
+    LatLng myPosition;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
         setUpMapIfNeeded();
+
+
     }
 
     @Override
@@ -60,6 +66,32 @@ public class MapsActivity extends FragmentActivity {
      * This should only be called once and when we are sure that {@link #mMap} is not null.
      */
     private void setUpMap() {
-        mMap.addMarker(new MarkerOptions().position(new LatLng(0, 0)).title("Marker"));
+        SupportMapFragment fm = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
+        //mMap.addMarker(new MarkerOptions().position(new LatLng(0, 0)).title("Marker"));
+        mMap = fm.getMap();
+        mMap.setMyLocationEnabled(true);
+
+        //mMap.getUiSettings().setMyLocationButtonEnabled(true);
+        LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+        Criteria criteria = new Criteria();
+        String provider = locationManager.getBestProvider(criteria, true);
+        Location location = locationManager.getLastKnownLocation(provider);
+
+        if (location != null) {
+            // Getting latitude of the current location
+            double latitude = location.getLatitude();
+
+            // Getting longitude of the current location
+            double longitude = location.getLongitude();
+
+            //Creating a LatLng object for the current location
+            LatLng latLng = new LatLng(latitude, longitude);
+
+            myPosition = new LatLng(latitude, longitude);
+
+
+            mMap.addMarker(new MarkerOptions().position(myPosition).title("Mig"));
+            System.out.print("DEN ER HER!");
+        }
     }
 }
