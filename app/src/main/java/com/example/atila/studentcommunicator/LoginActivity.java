@@ -307,7 +307,7 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
             if (success) {
                 //finish();
                 //test yououo
-                Intent a = new Intent(LoginActivity.this, MainActivity.class);
+                Intent a = new Intent(LoginActivity.this, MapsActivity.class);
                 startActivity(a);
 
             } else {
