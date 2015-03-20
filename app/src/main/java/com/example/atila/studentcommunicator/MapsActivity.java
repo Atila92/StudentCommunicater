@@ -155,12 +155,11 @@ public class MapsActivity extends FragmentActivity implements OnMapClickListener
 
         LatLng newlatLng = new LatLng(newLatitude, newLongitude);
 
-        newPos = newlatLng;
 
 
         float[] results = new float[1];
         Location.distanceBetween(myPosition.latitude, myPosition.longitude,
-                newPos.latitude, newPos.longitude, results);
+                newlatLng.latitude, newlatLng.longitude, results);
         System.out.println("----------------------->"+results[0]);
         distance = results[0];
         notifyUser();
@@ -179,7 +178,7 @@ public class MapsActivity extends FragmentActivity implements OnMapClickListener
         NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         NotificationCompat.Builder mBuilder =
                 new NotificationCompat.Builder(this)
-                     //   .setSmallIcon(R.drawable.logo)
+                        .setSmallIcon(R.mipmap.logo)
                         .setContentTitle("StudentCommunicator")
                         .setContentText("Someone is "+distance +"m from you" );
         int NOTIFICATION_ID = 1;
