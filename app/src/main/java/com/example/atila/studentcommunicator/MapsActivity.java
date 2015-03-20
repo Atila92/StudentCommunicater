@@ -179,7 +179,7 @@ public class MapsActivity extends FragmentActivity implements OnMapClickListener
         NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         NotificationCompat.Builder mBuilder =
                 new NotificationCompat.Builder(this)
-                        .setSmallIcon(R.drawable.logo)
+                     //   .setSmallIcon(R.drawable.logo)
                         .setContentTitle("StudentCommunicator")
                         .setContentText("Someone is "+distance +"m from you" );
         int NOTIFICATION_ID = 1;
