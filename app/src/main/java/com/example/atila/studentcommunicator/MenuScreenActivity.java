@@ -9,6 +9,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.view.View.OnClickListener;
+import android.widget.ImageView;
 
 public class MenuScreenActivity extends ActionBarActivity implements OnClickListener {
 
@@ -17,6 +18,7 @@ public class MenuScreenActivity extends ActionBarActivity implements OnClickList
     private Button mapButton;
     private Button forumButton;
     private Button signOutButton;
+    private ImageView settings;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,12 +29,14 @@ public class MenuScreenActivity extends ActionBarActivity implements OnClickList
         mapButton = (Button) findViewById(R.id.mapButton);
         forumButton = (Button) findViewById(R.id.forumButton);
         signOutButton = (Button) findViewById(R.id.signOutButton);
+        settings = (ImageView) findViewById(R.id.imageView2);
 
         //Setup listeners
         activateButton.setOnClickListener(this);
         mapButton.setOnClickListener(this);
         forumButton.setOnClickListener(this);
         signOutButton.setOnClickListener(this);
+        settings.setOnClickListener(this);
     }
     public boolean buttonColor =true;
     public void onClick(View v) {
@@ -65,6 +69,12 @@ public class MenuScreenActivity extends ActionBarActivity implements OnClickList
             case R.id.signOutButton:
                 Intent k = new Intent(MenuScreenActivity.this, LoginActivity.class);
                 startActivity(k);
+
+                break;
+
+            case R.id.imageView2:
+                Intent j = new Intent(MenuScreenActivity.this, SettingsActivity.class);
+                startActivity(j);
 
                 break;
             default:
