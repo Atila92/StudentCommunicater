@@ -26,6 +26,7 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import android.app.ProgressDialog;
@@ -68,16 +69,20 @@ public class LoginActivity extends Activity implements OnClickListener {
     // UI references.
     private AutoCompleteTextView mEmailView;
     private EditText mPasswordView;
-    private View mProgressView;
-    private View mLoginFormView;
-    private TextView registerLink; // føre dig til register
+    private TextView registerLink;
     private Button mEmailSignInButton;
+    private ImageView logo;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        //set up logo
+        //logo = (ImageView) findViewById(R.id.imageView);
+        logo = (ImageView)findViewById(R.id.imageView);
+        logo.setImageResource(R.drawable.logo);
 
         // Set up the login form.
         mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
@@ -106,12 +111,6 @@ public class LoginActivity extends Activity implements OnClickListener {
                 break;
 
         }
-
-
-//            mLoginFormView = findViewById(R.id.login_form);
-        //          mProgressView = findViewById(R.id.login_progress);
-
-
     }
 
 
@@ -167,7 +166,7 @@ public class LoginActivity extends Activity implements OnClickListener {
 
                 if (success == 1) {
                     Log.d("Login Successful!", json.toString());
-                    Intent i = new Intent(LoginActivity.this, MapsActivity.class);
+                    Intent i = new Intent(LoginActivity.this, MenuScreenActivity.class);
                     finish();
                     startActivity(i);
                     return json.getString(TAG_MESSAGE);
