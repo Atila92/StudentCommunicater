@@ -22,7 +22,7 @@
         android:layout_gravity="center_horizontal"
         android:src="@drawable/settings"
         android:layout_alignParentTop="true"
-        android:layout_alignEnd="@+id/activateButton" />
+        android:layout_alignEnd="@+id/signOutButton" />
 
     <Button
         style="?android:attr/buttonStyleSmall"
@@ -32,15 +32,6 @@
         android:id="@+id/signOutButton"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true" />
-
-    <Button
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="Activate Location"
-        android:id="@+id/activateButton"
-        android:layout_above="@+id/mapButton"
-        android:layout_alignParentStart="true"
-        android:background="#ffff100b" />
 
     <Button
         android:layout_width="fill_parent"
@@ -56,8 +47,18 @@
         android:text="Course Forums"
         android:id="@+id/forumButton"
         android:layout_centerVertical="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:layout_toStartOf="@+id/imageView2"
+        android:layout_alignEnd="@+id/mapButton" />
 
+    <Switch
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Location"
+        android:id="@+id/switch1"
+        android:checked="false"
+        android:layout_alignTop="@+id/imageView2"
+        android:layout_alignParentStart="true" />
 
 
 </RelativeLayout>

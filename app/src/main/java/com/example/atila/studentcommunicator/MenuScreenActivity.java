@@ -9,51 +9,54 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.view.View.OnClickListener;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
+import android.widget.Switch;
 
 public class MenuScreenActivity extends ActionBarActivity implements OnClickListener {
 
     //UI References
-    private Button activateButton;
     private Button mapButton;
     private Button forumButton;
     private Button signOutButton;
     private ImageView settings;
+    private Switch locationSwitch;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu_screen);
 
-        activateButton = (Button) findViewById(R.id.activateButton);
+        final Intent UpdaterService = new Intent(this, Updater.class);
+
         mapButton = (Button) findViewById(R.id.mapButton);
         forumButton = (Button) findViewById(R.id.forumButton);
         signOutButton = (Button) findViewById(R.id.signOutButton);
         settings = (ImageView) findViewById(R.id.imageView2);
+        locationSwitch = (Switch) findViewById(R.id.switch1);
 
         //Setup listeners
-        activateButton.setOnClickListener(this);
         mapButton.setOnClickListener(this);
         forumButton.setOnClickListener(this);
         signOutButton.setOnClickListener(this);
         settings.setOnClickListener(this);
+        locationSwitch.setChecked(true);
+        locationSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked){
+                    startService(UpdaterService);
+                }
+                else {
+                    //do something else
+                }
+            }
+        });
+
     }
-    public boolean buttonColor =true;
+    //public boolean buttonColor =true;
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.activateButton:
-                if(buttonColor == true) {
-                    activateButton.setBackgroundColor(Color.GREEN);
-                    activateButton.setText("Deactivate Button");
-                    buttonColor = false;
-                }
-                else if(buttonColor == false) {
-                    activateButton.setBackgroundColor(Color.RED);
-                    activateButton.setText("Activate Button");
-                    buttonColor = true;
-                }
-
-                break;
 
             case R.id.mapButton:
                 Intent i = new Intent(MenuScreenActivity.this, MapsActivity.class);

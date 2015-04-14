@@ -116,11 +116,13 @@ public class MapsActivity extends FragmentActivity implements OnMapClickListener
             myPosition = latLng;
 
             mMap.addMarker(new MarkerOptions().position(myPosition).title("Atila"));
+           
             System.out.print("DEN ER HER!");
 
         }
 
     }
+
     @Override
     public void onMapClick(LatLng point) {
         //tvLocInfo.setText(point.toString());
@@ -146,15 +148,10 @@ public class MapsActivity extends FragmentActivity implements OnMapClickListener
     @Override
     public void onMarkerDrag(Marker marker) {
        // tvLocInfo.setText("Marker " + marker.getId() + " Drag@" + marker.getPosition());
-    }
-
-    @Override
-    public void onMarkerDragEnd(Marker marker) {
         double newLatitude = marker.getPosition().latitude;
         double newLongitude = marker.getPosition().longitude;
 
         LatLng newlatLng = new LatLng(newLatitude, newLongitude);
-
 
 
         float[] results = new float[1];
@@ -162,9 +159,14 @@ public class MapsActivity extends FragmentActivity implements OnMapClickListener
                 newlatLng.latitude, newlatLng.longitude, results);
         System.out.println("----------------------->"+results[0]);
         distance = results[0];
-        notifyUser();
+        if(distance <100) {
+            notifyUser();
+        }
+    }
 
-
+    @Override
+    public void onMarkerDragEnd(Marker marker) {
+        marker.getTitle();
     }
 
     @Override
@@ -184,4 +186,5 @@ public class MapsActivity extends FragmentActivity implements OnMapClickListener
         int NOTIFICATION_ID = 1;
         notificationManager.notify(NOTIFICATION_ID, mBuilder.build());
     }
+
 }
