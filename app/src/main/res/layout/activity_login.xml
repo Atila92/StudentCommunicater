@@ -5,7 +5,8 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.example.atila.studentcommunicator.LoginActivity">
+    tools:context="com.example.atila.studentcommunicator.LoginActivity"
+    android:background="@drawable/blackboard">
 
     <!-- Login progress -->
     <ProgressBar android:id="@+id/login_progress" style="?android:attr/progressBarStyleLarge"
@@ -21,14 +22,16 @@
             <AutoCompleteTextView android:id="@+id/email" android:layout_width="match_parent"
                 android:layout_height="wrap_content" android:hint="@string/prompt_email"
                 android:inputType="textEmailAddress" android:maxLines="1"
-                android:singleLine="true" />
+                android:singleLine="true"
+                android:textColor="#ffffffff" />
 
             <EditText android:id="@+id/password" android:layout_width="match_parent"
                 android:layout_height="wrap_content" android:hint="Password"
                 android:imeActionId="@+id/login"
                 android:imeActionLabel="@string/action_sign_in_short"
                 android:imeOptions="actionUnspecified" android:inputType="textPassword"
-                android:maxLines="1" android:singleLine="true" />
+                android:maxLines="1" android:singleLine="true"
+                android:textColor="#ffffffff" />
 
             <Button android:id="@+id/email_sign_in_button" style="?android:textAppearanceSmall"
                 android:layout_width="match_parent" android:layout_height="wrap_content"
@@ -44,7 +47,8 @@
                 android:text="New? Register here"
                 android:gravity="center"
                 android:textSize="20dip"
-                android:textColor="#0b84aa"/>
+                android:textColor="#0b84aa"
+                android:textStyle="bold" />
 
             <ImageView
                 android:layout_width="wrap_content"

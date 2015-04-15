@@ -66,6 +66,11 @@
             android:name=".Updater"
             android:exported="false" >
         </service>
+
+        <activity
+            android:name=".listScreenActivity"
+            android:label="@string/title_activity_list_screen" >
+        </activity>
     </application>
 
 </manifest>

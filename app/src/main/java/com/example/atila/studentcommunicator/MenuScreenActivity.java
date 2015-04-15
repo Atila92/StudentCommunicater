@@ -18,6 +18,7 @@ public class MenuScreenActivity extends ActionBarActivity implements OnClickList
     //UI References
     private Button mapButton;
     private Button forumButton;
+    private Button listButton;
     private Button signOutButton;
     private ImageView settings;
     private Switch locationSwitch;
@@ -31,6 +32,7 @@ public class MenuScreenActivity extends ActionBarActivity implements OnClickList
 
         mapButton = (Button) findViewById(R.id.mapButton);
         forumButton = (Button) findViewById(R.id.forumButton);
+        listButton = (Button) findViewById(R.id.listButton);
         signOutButton = (Button) findViewById(R.id.signOutButton);
         settings = (ImageView) findViewById(R.id.imageView2);
         locationSwitch = (Switch) findViewById(R.id.switch1);
@@ -38,9 +40,10 @@ public class MenuScreenActivity extends ActionBarActivity implements OnClickList
         //Setup listeners
         mapButton.setOnClickListener(this);
         forumButton.setOnClickListener(this);
+        listButton.setOnClickListener(this);
         signOutButton.setOnClickListener(this);
         settings.setOnClickListener(this);
-        locationSwitch.setChecked(true);
+        locationSwitch.setChecked(false);
         locationSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -69,6 +72,12 @@ public class MenuScreenActivity extends ActionBarActivity implements OnClickList
 
                 break;
 
+            case R.id.listButton:
+                Intent j = new Intent(MenuScreenActivity.this, listScreenActivity.class);
+                startActivity(j);
+
+                break;
+
             case R.id.signOutButton:
                 Intent k = new Intent(MenuScreenActivity.this, LoginActivity.class);
                 startActivity(k);
@@ -76,8 +85,8 @@ public class MenuScreenActivity extends ActionBarActivity implements OnClickList
                 break;
 
             case R.id.imageView2:
-                Intent j = new Intent(MenuScreenActivity.this, SettingsActivity.class);
-                startActivity(j);
+                Intent h = new Intent(MenuScreenActivity.this, SettingsActivity.class);
+                startActivity(h);
 
                 break;
             default:

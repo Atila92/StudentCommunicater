@@ -4,7 +4,9 @@ import android.app.IntentService;
 import android.content.Intent;
 import android.location.Criteria;
 import android.location.Location;
+import android.location.LocationListener;
 import android.location.LocationManager;
+import android.os.Bundle;
 import android.util.Log;
 
 import org.apache.http.NameValuePair;
@@ -21,8 +23,9 @@ public class Updater extends IntentService {
     private static final String TAG = "com.example.atila.studentcommunicator";
     private Timer timer = new Timer();
     private TimerTask timerTask;
-    public float lat;
-    public float lon;
+    public String lat;
+    public String lon;
+
 
     private static final String URL = "http://toiletgamez.com/bachelor_db/updater.php";
 
@@ -40,47 +43,59 @@ public class Updater extends IntentService {
 
         timerTask = new TimerTask(){
         @Override
-        public void run(){
-            //Get location
+        public void run() {
+
             LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
             Criteria criteria = new Criteria();
             String provider = locationManager.getBestProvider(criteria, true);
-            Location location = locationManager.getLastKnownLocation(provider);
 
 
-            if (location != null) {
-                // Getting latitude of the current location
-                double mylatitude = location.getLatitude();
+            //Location location = locationManager.getLastKnownLocation(provider);
+            LocationListener locationListener = new LocationListener() {
+                public void onLocationChanged(Location location) {
+                    // Called when a new location is found by the network location provider.
+                    // Getting latitude of the current location
+                    double mylatitude = location.getLatitude();
 
-                // Getting longitude of the current location
-                double mylongitude = location.getLongitude();
-                String latitude = String.valueOf(mylatitude);
-                Log.i(TAG, "kig her"+latitude);
-                lat = (float)mylatitude;
-                lon = (float) mylongitude;
-                String hej = String.valueOf(lat);
-                String farvel = String.valueOf(lon);
+                    // Getting longitude of the current location
+                    double mylongitude = location.getLongitude();
+                    if(location!= null) {
+                        lat = String.valueOf(mylatitude);
+                        lon = String.valueOf(mylongitude);
+                    }
+                }
+                public void onStatusChanged(String provider, int status, Bundle extras) {}
+
+                public void onProviderEnabled(String provider) {}
+
+                public void onProviderDisabled(String provider) {}
+            };
+            locationManager.requestLocationUpdates(provider, 10000, 0, locationListener);
+
+            //if (location != null) {
+
+                //lat = String.valueOf(mylatitude);
+                //lon = String.valueOf(mylongitude);
+
 
                 List<NameValuePair> params = new ArrayList<NameValuePair>();
-                params.add(new BasicNameValuePair("latitude", hej));
-                params.add(new BasicNameValuePair("longtitude", farvel));
+                params.add(new BasicNameValuePair("latitude", lat));
+                params.add(new BasicNameValuePair("longitude", lon));
 
                 JSONObject json = jsonParser.makeHttpRequest(
                         URL, "POST", params);
+
+                Log.i(TAG, "Den når ned!" + lat + "  " + lon);
+                // gem til databsen her hver 10 sec
+
+
+                //   JSONObject json = JSONParser.makeHttpRequest(URL)
+
             }
-
-
-            // gem til databsen her hver 10 sec
-
-
-         //   JSONObject json = JSONParser.makeHttpRequest(URL)
-
-
-
-
-        }
+       // }
         };
         timer.schedule(timerTask, 0, 10000);
 
     }
+
 }
