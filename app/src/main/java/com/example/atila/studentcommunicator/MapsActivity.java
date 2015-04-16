@@ -10,6 +10,7 @@ import android.location.LocationManager;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
+import android.util.Log;
 
 import com.google.android.gms.drive.query.internal.NotFilter;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -28,7 +29,7 @@ public class MapsActivity extends FragmentActivity implements OnMapClickListener
 
     GoogleMap mMap; // Might be null if Google Play services APK is not available.
     LatLng myPosition;
-
+    private static final String TAG = "com.example.atila.studentcommunicator";
     final int RQS_GooglePlayServices = 1;
     Location otherLocation;
     boolean markerClicked;
@@ -103,7 +104,7 @@ public class MapsActivity extends FragmentActivity implements OnMapClickListener
         Criteria criteria = new Criteria();
         String provider = locationManager.getBestProvider(criteria, true);
         Location location = locationManager.getLastKnownLocation(provider);
-
+        Log.i(TAG, "location her" +location);
         if (location != null) {
             // Getting latitude of the current location
             double latitude = location.getLatitude();

@@ -1,5 +1,6 @@
 package com.example.atila.studentcommunicator;
 
+import android.app.Service;
 import android.content.Intent;
 import android.graphics.Color;
 import android.support.v7.app.ActionBarActivity;
@@ -28,7 +29,7 @@ public class MenuScreenActivity extends ActionBarActivity implements OnClickList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu_screen);
 
-        final Intent UpdaterService = new Intent(this, Updater.class);
+        final Service UpdaterService = new Updater();
 
         mapButton = (Button) findViewById(R.id.mapButton);
         forumButton = (Button) findViewById(R.id.forumButton);
@@ -48,10 +49,10 @@ public class MenuScreenActivity extends ActionBarActivity implements OnClickList
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(isChecked){
-                    startService(UpdaterService);
+                    startService(new Intent(getApplicationContext(), Updater.class));
                 }
                 else {
-                    //do something else
+                    stopService(new Intent(getApplicationContext(), Updater.class));
                 }
             }
         });
