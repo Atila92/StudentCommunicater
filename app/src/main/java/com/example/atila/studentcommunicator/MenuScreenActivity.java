@@ -14,8 +14,18 @@ import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.Switch;
 
+import org.apache.http.NameValuePair;
+import org.apache.http.message.BasicNameValuePair;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
+
 public class MenuScreenActivity extends ActionBarActivity implements OnClickListener {
 
+    private static final String URL = "http://toiletgamez.com/bachelor_db/updater.php";
+
+    JSONParser jsonParser = new JSONParser();
     //UI References
     private Button mapButton;
     private Button forumButton;
@@ -53,6 +63,20 @@ public class MenuScreenActivity extends ActionBarActivity implements OnClickList
                 }
                 else {
                     stopService(new Intent(getApplicationContext(), Updater.class));
+
+                    Runnable runnable = new Runnable() {
+
+                        @Override
+                        public void run() {
+                            List<NameValuePair> params = new ArrayList<NameValuePair>();
+                            params.add(new BasicNameValuePair("latitude", "0"));
+                            params.add(new BasicNameValuePair("longitude","0"));
+
+                            JSONObject json = jsonParser.makeHttpRequest(
+                                    URL, "POST", params);
+                        }
+                    };
+                    new Thread(runnable).start();
                 }
             }
         });
