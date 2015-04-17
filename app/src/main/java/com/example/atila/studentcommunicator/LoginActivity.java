@@ -73,6 +73,8 @@ public class LoginActivity extends Activity implements OnClickListener {
     private Button mEmailSignInButton;
     private ImageView logo;
 
+    public static String loginEmail;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -166,6 +168,7 @@ public class LoginActivity extends Activity implements OnClickListener {
 
                 if (success == 1) {
                     Log.d("Login Successful!", json.toString());
+                    loginEmail = mEmailView.getText().toString();
                     Intent i = new Intent(LoginActivity.this, MenuScreenActivity.class);
                     finish();
                     startActivity(i);

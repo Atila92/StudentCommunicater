@@ -64,7 +64,7 @@ public class MenuScreenActivity extends ActionBarActivity implements OnClickList
                 else {
                     stopService(new Intent(getApplicationContext(), Updater.class));
 
-                    Runnable runnable = new Runnable() {
+                    Runnable runnable2 = new Runnable() {
 
                         @Override
                         public void run() {
@@ -76,7 +76,7 @@ public class MenuScreenActivity extends ActionBarActivity implements OnClickList
                                     URL, "POST", params);
                         }
                     };
-                    new Thread(runnable).start();
+                    new Thread(runnable2).start();
                 }
             }
         });

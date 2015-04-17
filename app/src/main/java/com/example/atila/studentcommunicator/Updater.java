@@ -18,8 +18,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
+
 
 public class Updater extends Service {
 
@@ -48,6 +47,7 @@ public class Updater extends Service {
     @Override
     public void onCreate() {
         Log.i(TAG, "Updater service startet!");
+        Log.i(TAG, "email -------> "+LoginActivity.loginEmail);
 
         LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
         //Criteria criteria = new Criteria();
@@ -62,9 +62,9 @@ public class Updater extends Service {
 
                 // Getting longitude of the current location
                 //double mylongitude = location.getLongitude();
-                Log.i(TAG, "location"+location);
-                Log.i(TAG, "latitude"+location.getLatitude());
-                Log.i(TAG, "longitude"+location.getLongitude());
+                //Log.i(TAG, "location"+location);
+                //Log.i(TAG, "latitude"+location.getLatitude());
+                //Log.i(TAG, "longitude"+location.getLongitude());
                 //location.
                 //if(location!= null) {
                 //lat = String.valueOf(location.getLatitude());
@@ -74,12 +74,17 @@ public class Updater extends Service {
 
                     @Override
                     public void run() {
+
+                        Log.i(TAG, "email22222 -------> "+ LoginActivity.loginEmail);
+
                         List<NameValuePair> params = new ArrayList<NameValuePair>();
                         params.add(new BasicNameValuePair("latitude", String.valueOf(location.getLatitude())));
                         params.add(new BasicNameValuePair("longitude", String.valueOf(location.getLongitude())));
-
+                        Log.i(TAG, "loooong -------> "+String.valueOf(location.getLongitude()));
+                        params.add(new BasicNameValuePair("email", LoginActivity.loginEmail));
                         JSONObject json = jsonParser.makeHttpRequest(
                                 URL, "POST", params);
+                        Log.i(TAG, "respons -------> "+ json);
                     }
                 };
                 new Thread(runnable).start();
