@@ -1,5 +1,6 @@
 package com.example.atila.studentcommunicator;
 
+import android.app.Activity;
 import android.app.Service;
 import android.content.Intent;
 import android.graphics.Color;
@@ -21,7 +22,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MenuScreenActivity extends ActionBarActivity implements OnClickListener {
+public class MenuScreenActivity extends Activity implements OnClickListener {
 
     private static final String URL = "http://toiletgamez.com/bachelor_db/updater.php";
 

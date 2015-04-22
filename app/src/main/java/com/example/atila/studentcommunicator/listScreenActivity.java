@@ -9,6 +9,8 @@ import android.widget.TextView;
 
 public class listScreenActivity extends ActionBarActivity {
 
+   // private static final String URL = "http://toiletgamez.com/bachelor_db/retrieve.php";
+
     private TextView list;
 
     @Override

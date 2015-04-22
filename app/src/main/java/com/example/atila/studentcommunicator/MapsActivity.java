@@ -118,9 +118,11 @@ public class MapsActivity extends FragmentActivity implements OnMapClickListener
             myPosition = latLng;
 
             mMap.addMarker(new MarkerOptions().position(myPosition).title("Atila"));
-           
+
             System.out.print("DEN ER HER!");
 
+        }else{
+            Log.i(TAG, "Cant find location");
         }
 
     }
