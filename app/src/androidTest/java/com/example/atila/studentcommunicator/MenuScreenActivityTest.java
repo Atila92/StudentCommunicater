@@ -75,4 +75,8 @@ public class MenuScreenActivityTest extends ActivityUnitTestCase<MenuScreenActiv
                 triggeredIntent3);
 
     }
+    @Override
+    protected void tearDown() throws Exception {
+        super.tearDown();
+    }
 }
