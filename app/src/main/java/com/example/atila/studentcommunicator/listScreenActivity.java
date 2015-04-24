@@ -90,7 +90,7 @@ public class listScreenActivity extends ActionBarActivity {
                         Log.v("listScreen","arraylist:" + arraylist);
                        // list.setText((CharSequence) arraylist);
 
-
+            //CHANGE TIL ATILA
                     }
 
 
