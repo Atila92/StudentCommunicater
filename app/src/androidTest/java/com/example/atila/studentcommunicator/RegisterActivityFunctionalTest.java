@@ -23,7 +23,7 @@ import java.util.List;
  */
 public class RegisterActivityFunctionalTest extends ActivityInstrumentationTestCase2<RegisterActivity> {
 
-    private static final String URL = "http://toiletgamez.com/bachelor_db/retrieve.php";
+    private static final String URL = "http://toiletgamez.com/bachelor_db/delete.php";
 
     public String emailRegistered = "test12@student.sdu.dk";
     private RegisterActivity activity;
