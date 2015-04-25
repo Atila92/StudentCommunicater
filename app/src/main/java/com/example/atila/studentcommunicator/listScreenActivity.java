@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,10 +20,11 @@ import java.util.HashMap;
 
 
 public class listScreenActivity extends ActionBarActivity {
+    private static final String TAG = "com.example.atila.studentcommunicator";
     private static final String URL = "http://toiletgamez.com/bachelor_db/display.php";
-    private TextView list;
+    private ListView listView;
 
-    ArrayList<HashMap<String, String>> arraylist;
+    public ArrayList<String> list = new ArrayList<String>();
     private JSONArray users = null;
 
     //JSON IDS:
@@ -35,9 +38,15 @@ public class listScreenActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_screen);
 
-        list = (TextView) findViewById(R.id.textView);
+        listView = (ListView) findViewById(R.id.listView);
+        new List().execute();
 
-        Log.v("iListScreen", "onCreate");
+        //Log.i("listScreen","arraylist:" +list);
+        //new List().execute();
+
+
+
+        //list.setText(arraylist);
 
         //   ArrayList<String> user = new ArrayList<String>();
 
@@ -48,28 +57,25 @@ public class listScreenActivity extends ActionBarActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        new listScreen().execute();
+
     }
 
-        public  class listScreen extends AsyncTask<String, String, String> {
+        public  class List extends AsyncTask<String, String, String> {
 
 
             protected String doInBackground(String... args) {
-            Log.d("DoInBackground ","kage ");
+            Log.d("DoInBackground ","Den kaldes!");
                 //Instantiate the arraylist to contain all the JSON data.
-
-                arraylist = new ArrayList<HashMap<String, String>>();
-
+               // ArrayList<String> list = new ArrayList<String>();
+                //ArrayList<String> data = new ArrayList<String>();
                 //J parser
                 JSONParser jsonParser = new JSONParser();
                 JSONObject jsonObject = jsonParser.getJSONFromUrl(URL);
 
-
                 try {
-
                         users = jsonObject.getJSONArray(TAG_USER);
 
-                    // looping through all posts according to the json object returned
+                    // looping through all coordinates according to the json object returned
                     for (int i = 0; i < users.length(); i++) {
                         JSONObject c = users.getJSONObject(i);
                         //gets the content of each tag
@@ -78,38 +84,25 @@ public class listScreenActivity extends ActionBarActivity {
                         String  latitude = c.getString("latitude");
 
                         // creating new HashMap
-                        HashMap<String, String> map = new HashMap<String, String>();
-                        map.put(TAG_NAME, name);
-                        map.put(TAG_LON, longitude);
-                        map.put(TAG_LAT, latitude);
+                        //HashMap<String, String> map = new HashMap<String, String>();
+                        list.add(name);
+                        list.add(latitude);
+                        list.add(longitude);
+                        //map.put(TAG_NAME, name);
+                        //map.put(TAG_LON, longitude);
+                        //map.put(TAG_LAT, latitude);
+
+                        //listView.setText(list);
 
                         // adding HashList to ArrayList
-                        arraylist.add(map);
-
-                        //System.out.println(map);
-                        Log.v("listScreen","arraylist:" + arraylist);
-                       // list.setText((CharSequence) arraylist);
-
-            //CHANGE TIL ATILA
+                        //arraylist.add(map);
                     }
+                    Log.i("listScreen","arraylist:" +list);
+                    //List<String> your_array_list = new ArrayList<String>();
+                    ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(listScreenActivity.this, android.R.layout.simple_list_item_1, list);
 
-
-                 //       JSONArray cookie = jsonObjet.getJSONArray("[user]");
-                  //   String name = (String) jsonObjet.get("name");
-                   //   String longitude = (String) jsonObjet.get("longitude");
-                    //  String  latitude = (String) jsonObjet.get("latitude");
-
-                    //   user.add(name);
-                    //   user.add(longitude);
-                    //   user.add(latitude);
-                    //  list.setText(user);
-
-                //           list.setText(name);
-                 //           list.setText(longitude);
-                   //         list.setText(latitude);
-                    // Log.d("VIRKER IKKE", "msg");
-                //   list.setText((CharSequence) cookie);
-
+                    //listView.setAdapter(arrayAdapter);
+                    //listView;
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -130,8 +123,6 @@ public class listScreenActivity extends ActionBarActivity {
 
 
             }
-
-
         }
     }
 

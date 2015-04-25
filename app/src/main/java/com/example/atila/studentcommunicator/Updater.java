@@ -24,8 +24,6 @@ public class Updater extends Service {
 
     private static final String TAG = "com.example.atila.studentcommunicator";
 
-
-
     private static final String URL = "http://toiletgamez.com/bachelor_db/updater.php";
 
     public class LocalBinder extends Binder {
@@ -42,7 +40,7 @@ public class Updater extends Service {
     private final IBinder mBinder = new LocalBinder();
 
     JSONParser jsonParser = new JSONParser();
-
+    private boolean running = true;
 
     @Override
     public void onCreate() {
@@ -50,41 +48,26 @@ public class Updater extends Service {
         Log.i(TAG, "email -------> "+LoginActivity.loginEmail);
 
         LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
-        //Criteria criteria = new Criteria();
-        //String provider = locationManager.getBestProvider(criteria, true);
-        //Location location = locationManager.getLastKnownLocation(provider);
 
         LocationListener locationListener = new LocationListener() {
             public void onLocationChanged(final Location location) {
-                // Called when a new location is found by the network location provider.
-                // Getting latitude of the current location
-                //double mylatitude = location.getLatitude();
-
-                // Getting longitude of the current location
-                //double mylongitude = location.getLongitude();
-                //Log.i(TAG, "location"+location);
-                //Log.i(TAG, "latitude"+location.getLatitude());
-                //Log.i(TAG, "longitude"+location.getLongitude());
-                //location.
-                //if(location!= null) {
-                //lat = String.valueOf(location.getLatitude());
-                //lon = String.valueOf(location.getLongitude());
 
                 Runnable runnable = new Runnable() {
 
                     @Override
                     public void run() {
+                        while (running == true) {
+                            Log.i(TAG, "email22222 -------> " + LoginActivity.loginEmail);
 
-                        Log.i(TAG, "email22222 -------> "+ LoginActivity.loginEmail);
-
-                        List<NameValuePair> params = new ArrayList<NameValuePair>();
-                        params.add(new BasicNameValuePair("latitude", String.valueOf(location.getLatitude())));
-                        params.add(new BasicNameValuePair("longitude", String.valueOf(location.getLongitude())));
-                        Log.i(TAG, "loooong -------> "+String.valueOf(location.getLongitude()));
-                        params.add(new BasicNameValuePair("email", LoginActivity.loginEmail));
-                        JSONObject json = jsonParser.makeHttpRequest(
-                                URL, "POST", params);
-                        Log.i(TAG, "respons -------> "+ json);
+                            List<NameValuePair> params = new ArrayList<NameValuePair>();
+                            params.add(new BasicNameValuePair("latitude", String.valueOf(location.getLatitude())));
+                            params.add(new BasicNameValuePair("longitude", String.valueOf(location.getLongitude())));
+                            Log.i(TAG, "loooong -------> " + String.valueOf(location.getLongitude()));
+                            params.add(new BasicNameValuePair("email", LoginActivity.loginEmail));
+                            JSONObject json = jsonParser.makeHttpRequest(
+                                    URL, "POST", params);
+                            Log.i(TAG, "respons -------> " + json);
+                        }
                     }
                 };
                 new Thread(runnable).start();
@@ -105,6 +88,11 @@ public class Updater extends Service {
 
         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 10000, 0, locationListener);
 
-
+    }
+    @Override
+    public void onDestroy()
+    {
+        running = false;
+        super.onDestroy();
     }
 }

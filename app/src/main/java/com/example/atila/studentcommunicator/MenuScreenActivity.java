@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -72,7 +73,8 @@ public class MenuScreenActivity extends Activity implements OnClickListener {
                             List<NameValuePair> params = new ArrayList<NameValuePair>();
                             params.add(new BasicNameValuePair("latitude", "0"));
                             params.add(new BasicNameValuePair("longitude","0"));
-
+                            Log.i("login activity", "email heeeeeeer: " + LoginActivity.loginEmail);
+                            params.add(new BasicNameValuePair("email", LoginActivity.loginEmail));
                             JSONObject json = jsonParser.makeHttpRequest(
                                     URL, "POST", params);
                         }

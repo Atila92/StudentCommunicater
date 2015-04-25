@@ -8,6 +8,7 @@ import android.app.LoaderManager.LoaderCallbacks;
 import android.app.ProgressDialog;
 import android.content.ContentResolver;
 import android.content.CursorLoader;
+import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
 import android.net.Uri;
@@ -185,7 +186,9 @@ private static final String TAG_MESSAGE = "message";
                 success = json.getInt(TAG_SUCCESS);
                 if (success == 1) {
                     Log.d("User Created!", json.toString());
+                    Intent i = new Intent(RegisterActivity.this, LoginActivity.class);
                     finish();
+                    startActivity(i);
                     return json.getString(TAG_MESSAGE);
                 }else{
                     Log.d("Login Failure!", json.getString(TAG_MESSAGE));
