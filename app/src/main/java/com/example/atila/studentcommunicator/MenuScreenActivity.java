@@ -95,7 +95,7 @@ public class MenuScreenActivity extends Activity implements OnClickListener {
                 break;
 
             case R.id.forumButton:
-                Intent l = new Intent(MenuScreenActivity.this, ForumActivity.class);
+                Intent l = new Intent(MenuScreenActivity.this, CourseListActivity.class);
                 startActivity(l);
 
                 break;

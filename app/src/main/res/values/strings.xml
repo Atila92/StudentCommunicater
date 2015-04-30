@@ -7,4 +7,5 @@
     <string name="title_activity_menu_screen">MenuScreenActivity</string>
     <string name="title_activity_settings">SettingsActivity</string>
     <string name="title_activity_list_screen">listScreenActivity</string>
+    <string name="title_activity_course_list">CourseListActivity</string>
 </resources>

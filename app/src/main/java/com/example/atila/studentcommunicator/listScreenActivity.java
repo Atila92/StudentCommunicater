@@ -18,7 +18,6 @@ import java.util.ArrayList;
 public class listScreenActivity extends Activity {
     private static final String TAG = "com.example.atila.studentcommunicator";
     private static final String URL = "http://toiletgamez.com/bachelor_db/display.php";
-    //public ArrayAdapter<String> arrayAdapter;
     public ArrayList<User> list = new ArrayList<>();
     private JSONArray users = null;
     public ArrayList<String> nearbyUsers = new ArrayList<String>();
@@ -34,17 +33,12 @@ public class listScreenActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_screen);
 
-
-
-
         new List().execute();
-
 
     }
     @Override
     protected void onResume() {
         super.onResume();
-        Log.i("nearbyusers","arraylist:" +nearbyUsers);
     }
 
         public  class List extends AsyncTask<String, String, String> {
