@@ -7,8 +7,12 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -21,7 +25,6 @@ public class CourseListActivity extends ActionBarActivity {
 
     private static final String TAG = "com.example.atila.studentcommunicator";
     private static final String URL = "http://toiletgamez.com/bachelor_db/course.php";
-    public ArrayList<Course> list = new ArrayList<>();
     private JSONArray courses = null;
     public ArrayList<String> courseList = new ArrayList<String>();
 
@@ -60,7 +63,6 @@ public class CourseListActivity extends ActionBarActivity {
 
                     Course course = new Course(courseName, Integer.parseInt(courseId));
 
-                   // list.add(course);
                     courseList.add(course.getName());
                 }
             } catch (JSONException e) {
@@ -73,14 +75,24 @@ public class CourseListActivity extends ActionBarActivity {
 
         @Override
         protected void onPostExecute(String result) {
-            Log.i("listScreen","onpostexecute:" +list);
             ListView listView;
             ArrayAdapter arrayAdapter;
             listView = (ListView) findViewById(R.id.listView2);
             arrayAdapter = new ArrayAdapter<String>(CourseListActivity.this,R.layout.simplerow, courseList);
             listView.setAdapter(arrayAdapter);
-
-
+            registerClickCallback();
+        }
+        private void registerClickCallback(){
+            ListView listView;
+            listView = (ListView) findViewById(R.id.listView2);
+            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View viewClicked, int position, long id) {
+                    TextView textView = (TextView) viewClicked;
+                    String message = "nr"+position+ " which is: "+ textView.getText().toString();
+                    Toast.makeText(CourseListActivity.this, message, Toast.LENGTH_LONG).show();
+                }
+            });
         }
     }
 }
