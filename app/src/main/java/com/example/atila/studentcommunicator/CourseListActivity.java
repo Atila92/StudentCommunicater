@@ -1,5 +1,6 @@
 package com.example.atila.studentcommunicator;
 
+import android.content.Intent;
 import android.location.Location;
 import android.os.AsyncTask;
 import android.support.v7.app.ActionBarActivity;
@@ -30,7 +31,7 @@ public class CourseListActivity extends ActionBarActivity {
 
     //JSON IDS:
     private static final String TAG_COURSE = "course";
-
+    public static String clickedCourseName;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,7 +54,6 @@ public class CourseListActivity extends ActionBarActivity {
 
             try {
                 courses = jsonObject.getJSONArray(TAG_COURSE);
-               // User currentUser = null;
                 // looping through all coordinates according to the json object returned
                 for (int i = 0; i < courses.length(); i++) {
                     JSONObject c = courses.getJSONObject(i);
@@ -91,6 +91,9 @@ public class CourseListActivity extends ActionBarActivity {
                     TextView textView = (TextView) viewClicked;
                     String message = "nr"+position+ " which is: "+ textView.getText().toString();
                     Toast.makeText(CourseListActivity.this, message, Toast.LENGTH_LONG).show();
+                    clickedCourseName =textView.getText().toString();
+                    Intent i = new Intent(CourseListActivity.this, ForumActivity.class);
+                    startActivity(i);
                 }
             });
         }
