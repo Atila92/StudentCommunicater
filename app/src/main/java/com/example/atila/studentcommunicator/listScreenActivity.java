@@ -18,7 +18,7 @@ import java.util.ArrayList;
 public class listScreenActivity extends Activity {
     private static final String TAG = "com.example.atila.studentcommunicator";
     private static final String URL = "http://toiletgamez.com/bachelor_db/display.php";
-    public ArrayList<User> list = new ArrayList<>();
+    public ArrayList<user> list = new ArrayList<>();
     private JSONArray users = null;
     public ArrayList<String> nearbyUsers = new ArrayList<String>();
 
@@ -51,7 +51,7 @@ public class listScreenActivity extends Activity {
 
                 try {
                     users = jsonObject.getJSONArray(TAG_USER);
-                    User currentUser = null;
+                    user currentUser = null;
                     // looping through all coordinates according to the json object returned
                     for (int i = 0; i < users.length(); i++) {
                         JSONObject c = users.getJSONObject(i);
@@ -61,7 +61,7 @@ public class listScreenActivity extends Activity {
                         String longitude = c.getString("longitude");
                         String  latitude = c.getString("latitude");
 
-                        User user = new User(email, name, Double.parseDouble(longitude), Double.parseDouble(latitude));
+                        user user = new com.example.atila.studentcommunicator.user(email, name, Double.parseDouble(longitude), Double.parseDouble(latitude));
 
                         if(email.equals(LoginActivity.loginEmail)){
                             currentUser = user;
@@ -72,7 +72,7 @@ public class listScreenActivity extends Activity {
                     if(currentUser != null){
                         ArrayList<String> names = new ArrayList<String>();
                         float[] results = new float[1];
-                        for(User user : list){
+                        for(com.example.atila.studentcommunicator.user user : list){
                             if(currentUser.getEmail() == user.getEmail()){
                                 continue;
                             }
