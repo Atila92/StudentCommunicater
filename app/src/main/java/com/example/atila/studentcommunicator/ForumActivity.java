@@ -30,20 +30,23 @@ public class ForumActivity extends ActionBarActivity implements OnClickListener 
 
     private static final String TAG = "com.example.atila.studentcommunicator";
     private static final String URL1 = "http://toiletgamez.com/bachelor_db/get_post.php";
-    //private static final String URL2 = "http://toiletgamez.com/bachelor_db/get_post.php";
+    private static final String URL2 = "http://toiletgamez.com/bachelor_db/display.php";
     private static final String URL3 = "http://toiletgamez.com/bachelor_db/save_post.php";
     private JSONArray posts = null;
+    private JSONArray users = null;
     public ArrayList<String> postList = new ArrayList<String>();
     public ArrayList<String> newPost = new ArrayList<String>();
     JSONParser jsonParser = new JSONParser();
 
     //JSON IDS:
     private static final String TAG_POST = "post";
+    private static final String TAG_USER = "user";
 
     private TextView courseTitle;
     private EditText inputField;
     private Button postButton;
     public String message;
+    public String userName;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,7 +73,7 @@ public class ForumActivity extends ActionBarActivity implements OnClickListener 
             public void run() {
                 List<NameValuePair> params = new ArrayList<NameValuePair>();
                 params.add(new BasicNameValuePair("course_name", CourseListActivity.clickedCourseName));
-                params.add(new BasicNameValuePair("name","??"));
+                params.add(new BasicNameValuePair("name",userName));
                 //Log.i("login activity", "email heeeeeeer: " + LoginActivity.loginEmail);
                 params.add(new BasicNameValuePair("message", message));
                 JSONObject json = jsonParser.makeHttpRequest(
@@ -81,6 +84,14 @@ public class ForumActivity extends ActionBarActivity implements OnClickListener 
         new Thread(runnable2).start();
         inputField.setText("");
         inputField.clearFocus();
+        //puts the new post into the listview
+        postList.add(userName + " : " + message);
+        ListView listView;
+        ArrayAdapter arrayAdapter;
+        listView = (ListView) findViewById(R.id.listView3);
+        arrayAdapter = new ArrayAdapter<String>(ForumActivity.this, R.layout.simplerow, postList);
+        listView.setAdapter(arrayAdapter);
+
         Toast.makeText(ForumActivity.this, "Posted!", Toast.LENGTH_LONG).show();
     }
 
@@ -126,6 +137,47 @@ public class ForumActivity extends ActionBarActivity implements OnClickListener 
             listView = (ListView) findViewById(R.id.listView3);
             arrayAdapter = new ArrayAdapter<String>(ForumActivity.this, R.layout.simplerow, postList);
             listView.setAdapter(arrayAdapter);
+            new Name().execute();
+        }
+
+    }
+    public  class Name extends AsyncTask<String, String, String> {
+
+        protected String doInBackground(String... args) {
+            Log.d("Name ", "Den kaldes!");
+            //J parser
+            // JSONParser jsonParser = new JSONParser();
+            JSONObject jsonObject2 = jsonParser.getJSONFromUrl(URL2);
+
+            try {
+                users = jsonObject2.getJSONArray(TAG_USER);
+                // looping through all coordinates according to the json object returned
+                for (int i = 0; i < users.length(); i++) {
+                    JSONObject c = users.getJSONObject(i);
+                    //gets the content of each tag
+                    String email = c.getString("email");
+                    String name = c.getString("name");
+                    String longitude = c.getString("longitude");
+                    String  latitude = c.getString("latitude");
+
+                    user user = new com.example.atila.studentcommunicator.user(email, name, Double.parseDouble(longitude), Double.parseDouble(latitude));
+                    if(user.getEmail().equals(LoginActivity.loginEmail)) {
+                       userName = user.getName();
+                        Log.i("email kaldes også! ", userName);
+                    }else{
+                        continue;
+                    }
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
         }
 
     }
