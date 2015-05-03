@@ -78,7 +78,7 @@ public class listScreenActivity extends Activity {
                             }
                             Location.distanceBetween(currentUser.getLatitude(), currentUser.getLongitude(),
                                     user.getLatitude(), user.getLongitude(), results);
-                            if(results[0] <= 100){
+                            if(results[0] <= 200){
                                 names.add(user.getName());
                             }
                         }
