@@ -34,7 +34,7 @@ public class ForumActivity extends Activity implements OnClickListener {
 
     private static final String TAG = "com.example.atila.studentcommunicator";
     private static final String URL1 = "http://toiletgamez.com/bachelor_db/get_post.php";
-    private static final String URL2 = "http://toiletgamez.com/bachelor_db/display.php";
+    private static final String URL2 = "http://toiletgamez.com/bachelor_db/display2.php";
     private static final String URL3 = "http://toiletgamez.com/bachelor_db/save_post.php";
     private JSONArray posts = null;
     private JSONArray users = null;
@@ -129,7 +129,8 @@ public class ForumActivity extends Activity implements OnClickListener {
                     String message = c.getString("message");
 
                     Post post = new Post(Integer.parseInt(postId), courseName, name, message);
-                    Log.i("clicked course name ", CourseListActivity.clickedCourseName+ " : "+ post.getCourseName());
+                    Log.i("name op ", name);
+                    Log.i("post id op ", postId);
 
                     if(post.getCourseName().equals(CourseListActivity.clickedCourseName)){
                         postList.add(post.getName() + " : " + post.getMessage());
