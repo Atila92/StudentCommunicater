@@ -1,4 +1,4 @@
-package com.example.atila.studentcommunicator.com.example.atila.studentcommunicator.models;
+package com.example.atila.studentcommunicator.models;
 
 /**
  * Created by Atila on 30-04-2015.

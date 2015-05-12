@@ -1,4 +1,4 @@
-package com.example.atila.studentcommunicator.com.example.atila.studentcommunicator.utils;
+package com.example.atila.studentcommunicator.utils;
 
 import android.app.Service;
 import android.content.Intent;
@@ -10,8 +10,8 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.util.Log;
 
-import com.example.atila.studentcommunicator.com.example.atila.studentcommunicator.net.JSONParser;
-import com.example.atila.studentcommunicator.com.example.atila.studentcommunicator.activities.LoginActivity;
+import com.example.atila.studentcommunicator.net.JSONParser;
+import com.example.atila.studentcommunicator.activities.LoginActivity;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;

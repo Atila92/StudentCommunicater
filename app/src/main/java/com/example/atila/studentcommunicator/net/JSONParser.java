@@ -1,5 +1,5 @@
 
-        package com.example.atila.studentcommunicator.com.example.atila.studentcommunicator.net;
+        package com.example.atila.studentcommunicator.net;
 
         import java.io.BufferedReader;
         import java.io.IOException;

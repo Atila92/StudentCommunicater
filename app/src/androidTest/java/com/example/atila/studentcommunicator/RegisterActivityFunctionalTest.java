@@ -12,7 +12,7 @@ import android.widget.EditText;
 
 import com.example.atila.studentcommunicator.com.example.atila.studentcommunicator.activities.LoginActivity;
 import com.example.atila.studentcommunicator.com.example.atila.studentcommunicator.activities.RegisterActivity;
-import com.example.atila.studentcommunicator.com.example.atila.studentcommunicator.net.JSONParser;
+import com.example.atila.studentcommunicator.net.JSONParser;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
