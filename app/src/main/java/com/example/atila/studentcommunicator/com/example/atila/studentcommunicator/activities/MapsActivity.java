@@ -1,4 +1,4 @@
-package com.example.atila.studentcommunicator;
+package com.example.atila.studentcommunicator.com.example.atila.studentcommunicator.activities;
 
 import android.app.Notification;
 import android.app.NotificationManager;
@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
+import com.example.atila.studentcommunicator.R;
 import com.google.android.gms.drive.query.internal.NotFilter;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;

@@ -1,4 +1,4 @@
-package com.example.atila.studentcommunicator;
+package com.example.atila.studentcommunicator.com.example.atila.studentcommunicator.activities;
 
 import android.app.Activity;
 import android.location.Location;
@@ -7,16 +7,16 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.TextView;
 
-import org.apache.http.NameValuePair;
-import org.apache.http.message.BasicNameValuePair;
+import com.example.atila.studentcommunicator.com.example.atila.studentcommunicator.net.JSONParser;
+import com.example.atila.studentcommunicator.R;
+import com.example.atila.studentcommunicator.com.example.atila.studentcommunicator.models.user;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.List;
 
 
 public class listScreenActivity extends Activity {
@@ -62,7 +62,7 @@ public class listScreenActivity extends Activity {
                         String longitude = c.getString("longitude");
                         String  latitude = c.getString("latitude");
 
-                        user user = new com.example.atila.studentcommunicator.user(email, name, Double.parseDouble(longitude), Double.parseDouble(latitude));
+                        user user = new com.example.atila.studentcommunicator.com.example.atila.studentcommunicator.models.user(email, name, Double.parseDouble(longitude), Double.parseDouble(latitude));
                         Log.i("hent det op ",email+ " "+ name);
                         if(email.equals(LoginActivity.loginEmail)){
                             currentUser = user;
@@ -73,7 +73,7 @@ public class listScreenActivity extends Activity {
                     if(currentUser != null){
                         ArrayList<String> names = new ArrayList<String>();
                         float[] results = new float[1];
-                        for(com.example.atila.studentcommunicator.user user : list){
+                        for(com.example.atila.studentcommunicator.com.example.atila.studentcommunicator.models.user user : list){
                             if(currentUser.getEmail() == user.getEmail()){
                                 continue;
                             }

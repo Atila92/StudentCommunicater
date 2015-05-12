@@ -2,9 +2,10 @@ package com.example.atila.studentcommunicator;
 
 import android.content.Intent;
 import android.test.ActivityUnitTestCase;
-import android.test.suitebuilder.annotation.MediumTest;
 import android.test.suitebuilder.annotation.SmallTest;
 import android.widget.Button;
+
+import com.example.atila.studentcommunicator.com.example.atila.studentcommunicator.activities.MenuScreenActivity;
 
 /**
  * Created by Atila on 22-04-2015.

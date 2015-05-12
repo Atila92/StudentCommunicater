@@ -1,19 +1,17 @@
-package com.example.atila.studentcommunicator;
+package com.example.atila.studentcommunicator.com.example.atila.studentcommunicator.utils;
 
-import android.app.IntentService;
 import android.app.Service;
 import android.content.Intent;
-import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Binder;
 import android.os.Bundle;
-import android.os.Handler;
 import android.os.IBinder;
 import android.util.Log;
 
-import com.google.android.gms.location.LocationServices;
+import com.example.atila.studentcommunicator.com.example.atila.studentcommunicator.net.JSONParser;
+import com.example.atila.studentcommunicator.com.example.atila.studentcommunicator.activities.LoginActivity;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
@@ -49,7 +47,7 @@ public class Updater extends Service {
     @Override
     public void onCreate() {
         Log.i(TAG, "Updater service startet!");
-        Log.i(TAG, "email -------> "+LoginActivity.loginEmail);
+        Log.i(TAG, "email -------> "+ LoginActivity.loginEmail);
 
         final LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
 

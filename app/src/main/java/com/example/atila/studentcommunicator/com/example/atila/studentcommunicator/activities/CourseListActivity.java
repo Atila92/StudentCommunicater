@@ -1,19 +1,20 @@
-package com.example.atila.studentcommunicator;
+package com.example.atila.studentcommunicator.com.example.atila.studentcommunicator.activities;
 
 import android.content.Intent;
-import android.location.Location;
 import android.os.AsyncTask;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.example.atila.studentcommunicator.com.example.atila.studentcommunicator.models.Course;
+import com.example.atila.studentcommunicator.com.example.atila.studentcommunicator.net.JSONParser;
+import com.example.atila.studentcommunicator.R;
 
 import org.json.JSONArray;
 import org.json.JSONException;

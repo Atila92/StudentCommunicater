@@ -11,6 +11,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Switch;
 
+import com.example.atila.studentcommunicator.com.example.atila.studentcommunicator.activities.LoginActivity;
+import com.example.atila.studentcommunicator.com.example.atila.studentcommunicator.activities.MenuScreenActivity;
+
 /**
  * Created by Atila on 25-04-2015.
  */

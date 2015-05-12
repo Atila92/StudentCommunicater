@@ -6,7 +6,8 @@ import android.test.suitebuilder.annotation.SmallTest;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
+
+import com.example.atila.studentcommunicator.com.example.atila.studentcommunicator.activities.RegisterActivity;
 
 /**
  * Created by Atila on 23-04-2015.

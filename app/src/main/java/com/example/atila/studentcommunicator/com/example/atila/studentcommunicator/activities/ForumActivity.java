@@ -1,11 +1,9 @@
-package com.example.atila.studentcommunicator;
+package com.example.atila.studentcommunicator.com.example.atila.studentcommunicator.activities;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
-import android.os.Handler;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -16,6 +14,11 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.example.atila.studentcommunicator.com.example.atila.studentcommunicator.net.JSONParser;
+import com.example.atila.studentcommunicator.com.example.atila.studentcommunicator.models.Post;
+import com.example.atila.studentcommunicator.R;
+import com.example.atila.studentcommunicator.com.example.atila.studentcommunicator.models.user;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
@@ -173,7 +176,7 @@ public class ForumActivity extends Activity implements OnClickListener {
                     String longitude = c.getString("longitude");
                     String  latitude = c.getString("latitude");
 
-                    user user = new com.example.atila.studentcommunicator.user(email, name, Double.parseDouble(longitude), Double.parseDouble(latitude));
+                    user user = new com.example.atila.studentcommunicator.com.example.atila.studentcommunicator.models.user(email, name, Double.parseDouble(longitude), Double.parseDouble(latitude));
                     if(user.getEmail().equals(LoginActivity.loginEmail)) {
                        userName = user.getName();
                         Log.i("email kaldes også! ", userName);

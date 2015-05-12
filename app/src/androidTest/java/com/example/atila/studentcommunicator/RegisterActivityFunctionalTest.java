@@ -5,11 +5,14 @@ import android.test.ActivityInstrumentationTestCase2;
 import android.test.TouchUtils;
 import android.test.ViewAsserts;
 import android.test.suitebuilder.annotation.MediumTest;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
+
+import com.example.atila.studentcommunicator.com.example.atila.studentcommunicator.activities.LoginActivity;
+import com.example.atila.studentcommunicator.com.example.atila.studentcommunicator.activities.RegisterActivity;
+import com.example.atila.studentcommunicator.com.example.atila.studentcommunicator.net.JSONParser;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;

@@ -1,4 +1,4 @@
-package com.example.atila.studentcommunicator;
+package com.example.atila.studentcommunicator.com.example.atila.studentcommunicator.activities;
 
 import android.app.Activity;
 import android.app.Service;
@@ -15,6 +15,10 @@ import android.view.View.OnClickListener;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.Switch;
+
+import com.example.atila.studentcommunicator.com.example.atila.studentcommunicator.net.JSONParser;
+import com.example.atila.studentcommunicator.R;
+import com.example.atila.studentcommunicator.com.example.atila.studentcommunicator.utils.Updater;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;

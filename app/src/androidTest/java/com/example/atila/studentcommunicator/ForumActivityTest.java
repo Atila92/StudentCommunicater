@@ -4,7 +4,8 @@ import android.content.Intent;
 import android.test.ActivityUnitTestCase;
 import android.test.suitebuilder.annotation.SmallTest;
 import android.widget.Button;
-import android.widget.TextView;
+
+import com.example.atila.studentcommunicator.com.example.atila.studentcommunicator.activities.ForumActivity;
 
 /**
  * Created by Atila on 04-05-2015.

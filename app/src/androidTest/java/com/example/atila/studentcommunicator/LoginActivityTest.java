@@ -6,10 +6,9 @@ import android.test.suitebuilder.annotation.SmallTest;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.google.android.gms.common.SignInButton;
+import com.example.atila.studentcommunicator.com.example.atila.studentcommunicator.activities.LoginActivity;
 
 /**
  * Created by Atila on 23-04-2015.

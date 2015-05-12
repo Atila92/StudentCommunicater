@@ -2,7 +2,8 @@ package com.example.atila.studentcommunicator;
 
 import android.content.Intent;
 import android.test.ActivityUnitTestCase;
-import android.test.suitebuilder.annotation.SmallTest;
+
+import com.example.atila.studentcommunicator.com.example.atila.studentcommunicator.activities.CourseListActivity;
 
 /**
  * Created by Atila on 04-05-2015.
