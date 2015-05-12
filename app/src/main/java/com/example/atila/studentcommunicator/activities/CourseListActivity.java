@@ -16,17 +16,20 @@ import com.example.atila.studentcommunicator.models.Course;
 import com.example.atila.studentcommunicator.net.JSONParser;
 import com.example.atila.studentcommunicator.R;
 
+import org.apache.http.NameValuePair;
+import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class CourseListActivity extends ActionBarActivity {
 
     private static final String TAG = "com.example.atila.studentcommunicator";
-    private static final String URL = "http://toiletgamez.com/bachelor_db/course.php";
+    private static final String URL = "http://toiletgamez.com/bachelor_db/show_course_user.php";
     private JSONArray courses = null;
     public ArrayList<String> courseList = new ArrayList<String>();
 
@@ -61,10 +64,12 @@ public class CourseListActivity extends ActionBarActivity {
                     //gets the content of each tag
                     String courseId =c.getString("course_id");
                     String courseName = c.getString("course_name");
+                    String email = c.getString("email");
 
                     Course course = new Course(courseName, Integer.parseInt(courseId));
-
-                    courseList.add(course.getName());
+                    if(email.equals(LoginActivity.loginEmail)) {
+                        courseList.add(course.getName());
+                    }
                 }
             } catch (JSONException e) {
                 e.printStackTrace();

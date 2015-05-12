@@ -5,10 +5,12 @@ package com.example.atila.studentcommunicator.models;
  */
 public class Course {
     private String courseName;
+    private String email;
     private int courseId;
 
     public Course(String courseName, int courseId) {
         this.courseName = courseName;
+        this.email = email;
         this.courseId = courseId;
     }
 
@@ -18,6 +20,14 @@ public class Course {
 
     public void setName(String courseName) {
         this.courseName = courseName;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public int getCourseId() {
