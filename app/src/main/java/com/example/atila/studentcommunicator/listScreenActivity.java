@@ -7,12 +7,16 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 
+import org.apache.http.NameValuePair;
+import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class listScreenActivity extends Activity {
@@ -22,11 +26,8 @@ public class listScreenActivity extends Activity {
     private JSONArray users = null;
     public ArrayList<String> nearbyUsers = new ArrayList<String>();
 
-    //JSON IDS:
+    //JSON ID:
     private static final String TAG_USER = "user";
-    private static final String TAG_NAME = "name";
-    private static final String TAG_LON = "longitude";
-    private static final String TAG_LAT = "latitude";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +45,7 @@ public class listScreenActivity extends Activity {
         public  class List extends AsyncTask<String, String, String> {
 
             protected String doInBackground(String... args) {
-            Log.d("DoInBackground ","Den kaldes!");
+
                 //J parser
                 JSONParser jsonParser = new JSONParser();
                 JSONObject jsonObject = jsonParser.getJSONFromUrl(URL);
@@ -62,12 +63,12 @@ public class listScreenActivity extends Activity {
                         String  latitude = c.getString("latitude");
 
                         user user = new com.example.atila.studentcommunicator.user(email, name, Double.parseDouble(longitude), Double.parseDouble(latitude));
-
+                        Log.i("hent det op ",email+ " "+ name);
                         if(email.equals(LoginActivity.loginEmail)){
                             currentUser = user;
+                            Log.i("current user ", currentUser.getName());
                         }
                         list.add(user);
-
                     }
                     if(currentUser != null){
                         ArrayList<String> names = new ArrayList<String>();
@@ -76,10 +77,12 @@ public class listScreenActivity extends Activity {
                             if(currentUser.getEmail() == user.getEmail()){
                                 continue;
                             }
+                            Log.i("måler location ", "--");
                             Location.distanceBetween(currentUser.getLatitude(), currentUser.getLongitude(),
                                     user.getLatitude(), user.getLongitude(), results);
                             if(results[0] <= 200){
                                 names.add(user.getName());
+                                Log.i("names listen ",user.getName());
                             }
                         }
                         nearbyUsers = names;

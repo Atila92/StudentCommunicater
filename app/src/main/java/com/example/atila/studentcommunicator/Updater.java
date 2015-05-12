@@ -9,8 +9,11 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Binder;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.IBinder;
 import android.util.Log;
+
+import com.google.android.gms.location.LocationServices;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
@@ -25,6 +28,7 @@ public class Updater extends Service {
     private static final String TAG = "com.example.atila.studentcommunicator";
 
     private static final String URL = "http://toiletgamez.com/bachelor_db/updater.php";
+    private static final String URL2 = "http://toiletgamez.com/bachelor_db/status.php";
 
     public class LocalBinder extends Binder {
         Updater getService() {
@@ -47,52 +51,62 @@ public class Updater extends Service {
         Log.i(TAG, "Updater service startet!");
         Log.i(TAG, "email -------> "+LoginActivity.loginEmail);
 
-        LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+        final LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
 
-        LocationListener locationListener = new LocationListener() {
+        // getting GPS status
+        boolean isGPSEnabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
+
+        final LocationListener locationListener = new LocationListener() {
             public void onLocationChanged(final Location location) {
 
                 Runnable runnable = new Runnable() {
 
                     @Override
                     public void run() {
-                        while (running == true) {
                             Log.i(TAG, "email22222 -------> " + LoginActivity.loginEmail);
+                            while(running ==true) {
+                                List<NameValuePair> params = new ArrayList<NameValuePair>();
+                                params.add(new BasicNameValuePair("latitude", String.valueOf(location.getLatitude())));
+                                params.add(new BasicNameValuePair("longitude", String.valueOf(location.getLongitude())));
+                                Log.i(TAG, "loooong -------> " + String.valueOf(location.getLongitude()));
+                                params.add(new BasicNameValuePair("email", LoginActivity.loginEmail));
+                                JSONObject json = jsonParser.makeHttpRequest(
+                                        URL, "POST", params);
 
-                            List<NameValuePair> params = new ArrayList<NameValuePair>();
-                            params.add(new BasicNameValuePair("latitude", String.valueOf(location.getLatitude())));
-                            params.add(new BasicNameValuePair("longitude", String.valueOf(location.getLongitude())));
-                            Log.i(TAG, "loooong -------> " + String.valueOf(location.getLongitude()));
-                            params.add(new BasicNameValuePair("email", LoginActivity.loginEmail));
-                            JSONObject json = jsonParser.makeHttpRequest(
-                                    URL, "POST", params);
-                            Log.i(TAG, "respons -------> " + json);
-                        }
+                                java.util.List<NameValuePair> params2 = new ArrayList<NameValuePair>();
+                                params2.add(new BasicNameValuePair("status", "1"));
+                                params2.add(new BasicNameValuePair("email", LoginActivity.loginEmail));
+                                JSONObject json2 = jsonParser.makeHttpRequest(
+                                        URL2, "POST", params2);
+                            }
                     }
                 };
                 new Thread(runnable).start();
+                if(running == false){
+                    locationManager.removeUpdates(this);
+                }
             }
 
             public void onStatusChanged(String provider, int status, Bundle extras) {
-                Log.i(TAG, "bliver kaldt");
             }
 
             public void onProviderEnabled(String provider) {
-                Log.i(TAG, "bliver kaldt2");
             }
 
             public void onProviderDisabled(String provider) {
-                Log.i(TAG, "bliver kaldt3");
             }
         };
-
-        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 10000, 0, locationListener);
-
+        if(isGPSEnabled) {
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 10000, 0, locationListener);
+        }else{
+            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 10000, 10, locationListener);
+        }
     }
     @Override
     public void onDestroy()
     {
         running = false;
+
         super.onDestroy();
     }
 }

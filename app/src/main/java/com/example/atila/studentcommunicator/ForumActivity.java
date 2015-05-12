@@ -1,12 +1,13 @@
 package com.example.atila.studentcommunicator;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Handler;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ArrayAdapter;
@@ -26,7 +27,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class ForumActivity extends ActionBarActivity implements OnClickListener {
+public class ForumActivity extends Activity implements OnClickListener {
 
     private static final String TAG = "com.example.atila.studentcommunicator";
     private static final String URL1 = "http://toiletgamez.com/bachelor_db/get_post.php";
@@ -35,7 +36,7 @@ public class ForumActivity extends ActionBarActivity implements OnClickListener 
     private JSONArray posts = null;
     private JSONArray users = null;
     public ArrayList<String> postList = new ArrayList<String>();
-    public ArrayList<String> newPost = new ArrayList<String>();
+    public ArrayList<Integer> newPost = new ArrayList<Integer>();
     JSONParser jsonParser = new JSONParser();
 
     //JSON IDS:
@@ -44,7 +45,7 @@ public class ForumActivity extends ActionBarActivity implements OnClickListener 
 
     private TextView courseTitle;
     private EditText inputField;
-    private Button postButton;
+    private Button postButton,fileButton;
     public String message;
     public String userName;
     @Override
@@ -55,8 +56,9 @@ public class ForumActivity extends ActionBarActivity implements OnClickListener 
         courseTitle.setText(CourseListActivity.clickedCourseName);
         inputField = (EditText) findViewById(R.id.editText);
         postButton = (Button) findViewById(R.id.postButton);
-
+        fileButton = (Button) findViewById(R.id.fileButton);
         postButton.setOnClickListener(this);
+        fileButton.setOnClickListener(this);
         new PostList().execute();
 
     }
@@ -67,32 +69,41 @@ public class ForumActivity extends ActionBarActivity implements OnClickListener 
 
     @Override
     public void onClick(View v) {
-        Runnable runnable2 = new Runnable() {
+        switch (v.getId()) {
+            case R.id.postButton:
+            Runnable runnable2 = new Runnable() {
 
-            @Override
-            public void run() {
-                List<NameValuePair> params = new ArrayList<NameValuePair>();
-                params.add(new BasicNameValuePair("course_name", CourseListActivity.clickedCourseName));
-                params.add(new BasicNameValuePair("name",userName));
-                //Log.i("login activity", "email heeeeeeer: " + LoginActivity.loginEmail);
-                params.add(new BasicNameValuePair("message", message));
-                JSONObject json = jsonParser.makeHttpRequest(
-                        URL3, "POST", params);
-            }
-        };
-        message = inputField.getText().toString();
-        new Thread(runnable2).start();
-        inputField.setText("");
-        inputField.clearFocus();
-        //puts the new post into the listview
-        postList.add(userName + " : " + message);
-        ListView listView;
-        ArrayAdapter arrayAdapter;
-        listView = (ListView) findViewById(R.id.listView3);
-        arrayAdapter = new ArrayAdapter<String>(ForumActivity.this, R.layout.simplerow, postList);
-        listView.setAdapter(arrayAdapter);
+                @Override
+                public void run() {
+                    List<NameValuePair> params = new ArrayList<NameValuePair>();
+                    params.add(new BasicNameValuePair("course_name", CourseListActivity.clickedCourseName));
+                    params.add(new BasicNameValuePair("name", userName));
+                    //Log.i("login activity", "email heeeeeeer: " + LoginActivity.loginEmail);
+                    params.add(new BasicNameValuePair("message", message));
+                    JSONObject json = jsonParser.makeHttpRequest(
+                            URL3, "POST", params);
+                }
+            };
+            message = inputField.getText().toString();
+            new Thread(runnable2).start();
+            inputField.setText("");
+            inputField.clearFocus();
+            //puts the new post into the listview
+            postList.add(userName + " : " + message);
+            ListView listView;
+            ArrayAdapter arrayAdapter;
+            listView = (ListView) findViewById(R.id.listView3);
+            arrayAdapter = new ArrayAdapter<String>(ForumActivity.this, R.layout.simplerow, postList);
+            listView.setAdapter(arrayAdapter);
+            Toast.makeText(ForumActivity.this, "Posted!", Toast.LENGTH_LONG).show();
+            break;
 
-        Toast.makeText(ForumActivity.this, "Posted!", Toast.LENGTH_LONG).show();
+            case R.id.fileButton:
+                Uri uri = Uri.parse("http://toiletgamez.com/bachelor_db/save_file.php");
+                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                startActivity(intent);
+            break;
+        }
     }
 
     public  class PostList extends AsyncTask<String, String, String> {
@@ -116,8 +127,10 @@ public class ForumActivity extends ActionBarActivity implements OnClickListener 
 
                     Post post = new Post(Integer.parseInt(postId), courseName, name, message);
                     Log.i("clicked course name ", CourseListActivity.clickedCourseName+ " : "+ post.getCourseName());
-                    if(post.getCourseName().equals(CourseListActivity.clickedCourseName)) {
+
+                    if(post.getCourseName().equals(CourseListActivity.clickedCourseName)){
                         postList.add(post.getName() + " : " + post.getMessage());
+
                     }else{
                         continue;
                     }
@@ -178,6 +191,7 @@ public class ForumActivity extends ActionBarActivity implements OnClickListener 
 
         @Override
         protected void onPostExecute(String result) {
+
         }
 
     }

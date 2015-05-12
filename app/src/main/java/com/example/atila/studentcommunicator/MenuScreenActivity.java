@@ -3,8 +3,8 @@ package com.example.atila.studentcommunicator;
 import android.app.Activity;
 import android.app.Service;
 import android.content.Intent;
-import android.graphics.Color;
-import android.support.v7.app.ActionBarActivity;
+import android.os.Handler;
+import android.os.StrictMode;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -24,8 +24,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MenuScreenActivity extends Activity implements OnClickListener {
-
-    private static final String URL = "http://toiletgamez.com/bachelor_db/updater.php";
+    private static final String TAG = "com.example.atila.studentcommunicator";
+    private static final String URL = "http://toiletgamez.com/bachelor_db/status.php";
 
     JSONParser jsonParser = new JSONParser();
     //UI References
@@ -40,6 +40,11 @@ public class MenuScreenActivity extends Activity implements OnClickListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu_screen);
+
+        if (android.os.Build.VERSION.SDK_INT > 9) {
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+            StrictMode.setThreadPolicy(policy);
+        }
 
         final Service UpdaterService = new Updater();
 
@@ -65,25 +70,28 @@ public class MenuScreenActivity extends Activity implements OnClickListener {
                 }
                 else {
                     stopService(new Intent(getApplicationContext(), Updater.class));
-
-                    Runnable runnable2 = new Runnable() {
-
-                        @Override
+                    // Execute some code after 2 seconds have passed
+                    Handler handler = new Handler();
+                    //Runnable runnable2 = new Runnable() {
+                    handler.postDelayed(new Runnable() {
                         public void run() {
                             List<NameValuePair> params = new ArrayList<NameValuePair>();
-                            params.add(new BasicNameValuePair("latitude", "0"));
-                            params.add(new BasicNameValuePair("longitude","0"));
-                            Log.i("login activity", "email heeeeeeer: " + LoginActivity.loginEmail);
+                            params.add(new BasicNameValuePair("status", "0"));
                             params.add(new BasicNameValuePair("email", LoginActivity.loginEmail));
                             JSONObject json = jsonParser.makeHttpRequest(
                                     URL, "POST", params);
+                            Log.i(TAG, "status set -->" );
                         }
-                    };
-                    new Thread(runnable2).start();
+                    },2000);
+                    //new Thread(runnable2).start();
                 }
             }
         });
 
+    }
+    @Override
+    protected void onResume() {
+        super.onResume();
     }
     //public boolean buttonColor =true;
     public void onClick(View v) {

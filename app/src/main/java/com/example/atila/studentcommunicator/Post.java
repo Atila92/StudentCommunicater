@@ -16,7 +16,7 @@ public class Post {
         this.message = message;
     }
 
-    public int getPostIdId() {
+    public int getPostId() {
         return postId;
     }
 

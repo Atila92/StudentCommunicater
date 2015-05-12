@@ -38,13 +38,25 @@
                 android:singleLine="false"
                 android:background="@drawable/back" />
 
-            <Button
-                style="?android:attr/buttonStyleSmall"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Post"
-                android:id="@+id/postButton"
-                 />
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent">
+
+                <Button
+                    style="?android:attr/buttonStyleSmall"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Post"
+                    android:id="@+id/postButton"
+                     />
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="File"
+                    android:id="@+id/fileButton" />
+            </LinearLayout>
         </LinearLayout>
     </LinearLayout>
 
