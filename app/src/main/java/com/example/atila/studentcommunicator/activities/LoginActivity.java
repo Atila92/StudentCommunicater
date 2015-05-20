@@ -1,6 +1,7 @@
 package com.example.atila.studentcommunicator.activities;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 
 import android.os.Bundle;
@@ -56,20 +57,14 @@ public class LoginActivity extends Activity implements OnClickListener {
     private EditText mPasswordView;
     private TextView registerLink;
     private Button mEmailSignInButton;
-    private ImageView logo;
 
-    public static String loginEmail;
-
+    public static SharedPreferences prefs;
+    private String EMAIL_KEY = "email";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
-        //set up logo
-        //logo = (ImageView) findViewById(R.id.imageView);
-        logo = (ImageView)findViewById(R.id.imageView);
-        logo.setImageResource(R.drawable.logo);
 
         // Set up the login form.
         mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
@@ -111,7 +106,6 @@ public class LoginActivity extends Activity implements OnClickListener {
         boolean failure = false;
 
         @Override
-
         protected void onPreExecute() {
 
             super.onPreExecute();
@@ -153,7 +147,11 @@ public class LoginActivity extends Activity implements OnClickListener {
 
                 if (success == 1) {
                     Log.d("Login Successful!", json.toString());
-                    loginEmail = mEmailView.getText().toString();
+                    prefs = getPreferences(MODE_WORLD_READABLE);
+                    SharedPreferences.Editor prefsEditor = prefs.edit();
+                    prefsEditor.putString("email", mEmailView.getText().toString());
+                    prefsEditor.commit();
+
                     Intent i = new Intent(LoginActivity.this, MenuScreenActivity.class);
                     finish();
                     startActivity(i);

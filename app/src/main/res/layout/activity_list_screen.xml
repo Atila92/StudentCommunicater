@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/blackboard"><![CDATA[
+    android:background="@drawable/background"><![CDATA[
     >
 
 
@@ -18,10 +18,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceSmall"
-            android:text=" People nearby you:"
             android:id="@+id/textView"
             android:textStyle="bold"
-            android:textColor="#ffffffff" />
+            android:textColor="#ff3c5f91" />
 
         <ListView
             android:layout_width="fill_parent"

@@ -8,12 +8,14 @@ public class Post {
     private String courseName;
     private String name;
     private String message;
+    private String timestamp;
 
-    public Post(int postId, String courseName, String name, String message) {
+    public Post(int postId, String courseName, String name, String message, String timestamp) {
         this.postId = postId;
         this.courseName = courseName;
         this.name = name;
         this.message = message;
+        this.timestamp = timestamp;
     }
 
     public int getPostId() {
@@ -47,4 +49,13 @@ public class Post {
     public void setMessage(String message) {
         this.message = message;
     }
+
+    public String getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(String timestamp) {
+        this.timestamp = timestamp;
+    }
+
 }

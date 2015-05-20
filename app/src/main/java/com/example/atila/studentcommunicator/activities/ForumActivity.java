@@ -2,6 +2,8 @@ package com.example.atila.studentcommunicator.activities;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.database.DataSetObserver;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -26,8 +28,13 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 
 
 public class ForumActivity extends Activity implements OnClickListener {
@@ -39,7 +46,7 @@ public class ForumActivity extends Activity implements OnClickListener {
     private JSONArray posts = null;
     private JSONArray users = null;
     public ArrayList<String> postList = new ArrayList<String>();
-    public ArrayList<Integer> newPost = new ArrayList<Integer>();
+    public ArrayList<String> newPost = new ArrayList<String>();
     JSONParser jsonParser = new JSONParser();
 
     //JSON IDS:
@@ -48,9 +55,10 @@ public class ForumActivity extends Activity implements OnClickListener {
 
     private TextView courseTitle;
     private EditText inputField;
-    private Button postButton,fileButton;
+    private Button postButton,fileUploadButton, fileDownloadButton;
     public String message;
     public String userName;
+    public String timestamp;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,9 +67,12 @@ public class ForumActivity extends Activity implements OnClickListener {
         courseTitle.setText(CourseListActivity.clickedCourseName);
         inputField = (EditText) findViewById(R.id.editText);
         postButton = (Button) findViewById(R.id.postButton);
-        fileButton = (Button) findViewById(R.id.fileButton);
+        fileUploadButton = (Button) findViewById(R.id.fileUploadButton);
+        fileDownloadButton = (Button) findViewById(R.id.fileDownloadButton);
         postButton.setOnClickListener(this);
-        fileButton.setOnClickListener(this);
+        fileUploadButton.setOnClickListener(this);
+        fileDownloadButton.setOnClickListener(this);
+        new Name().execute();
         new PostList().execute();
 
     }
@@ -74,6 +85,10 @@ public class ForumActivity extends Activity implements OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.postButton:
+                DateFormat dateFormatter = new SimpleDateFormat("dd:MM:yyyy");
+                dateFormatter.setTimeZone(TimeZone.getTimeZone("UTC"));
+                Date today = new Date();
+                timestamp = dateFormatter.format(today);
             Runnable runnable2 = new Runnable() {
 
                 @Override
@@ -83,6 +98,7 @@ public class ForumActivity extends Activity implements OnClickListener {
                     params.add(new BasicNameValuePair("name", userName));
                     //Log.i("login activity", "email heeeeeeer: " + LoginActivity.loginEmail);
                     params.add(new BasicNameValuePair("message", message));
+                    params.add(new BasicNameValuePair("timestamp", timestamp));
                     JSONObject json = jsonParser.makeHttpRequest(
                             URL3, "POST", params);
                 }
@@ -91,20 +107,36 @@ public class ForumActivity extends Activity implements OnClickListener {
             new Thread(runnable2).start();
             inputField.setText("");
             inputField.clearFocus();
+                Log.i("timestamp" ,timestamp);
             //puts the new post into the listview
-            postList.add(userName + " : " + message);
-            ListView listView;
-            ArrayAdapter arrayAdapter;
-            listView = (ListView) findViewById(R.id.listView3);
-            arrayAdapter = new ArrayAdapter<String>(ForumActivity.this, R.layout.simplerow, postList);
-            listView.setAdapter(arrayAdapter);
+            newPost.add(userName + " : " + message + "\r\n"+ timestamp);
+            final ListView listView;
+            final ArrayAdapter arrayAdapter2;
+            listView = (ListView) findViewById(R.id.listView4);
+            arrayAdapter2 = new ArrayAdapter<String>(ForumActivity.this, R.layout.simplerow_yellow, newPost);
+            listView.setAdapter(arrayAdapter2);
             Toast.makeText(ForumActivity.this, "Posted!", Toast.LENGTH_LONG).show();
+            //Scrolls the listview down to the bottom
+            arrayAdapter2.registerDataSetObserver(new DataSetObserver() {
+                @Override
+                public void onChanged() {
+                    super.onChanged();
+                    listView.setSelection(arrayAdapter2.getCount() - 1);
+                }
+            });
+
             break;
 
-            case R.id.fileButton:
+            case R.id.fileUploadButton:
                 Uri uri = Uri.parse("http://toiletgamez.com/bachelor_db/save_file.php");
                 Intent intent = new Intent(Intent.ACTION_VIEW, uri);
                 startActivity(intent);
+            break;
+
+            case R.id.fileDownloadButton:
+                Uri uri2 = Uri.parse("http://toiletgamez.com/bachelor_db/test.php");
+                Intent intent2 = new Intent(Intent.ACTION_VIEW, uri2);
+                startActivity(intent2);
             break;
         }
     }
@@ -127,13 +159,14 @@ public class ForumActivity extends Activity implements OnClickListener {
                     String courseName = c.getString("course_name");
                     String name = c.getString("name");
                     String message = c.getString("message");
+                    String time = c.getString("timestamp");
 
-                    Post post = new Post(Integer.parseInt(postId), courseName, name, message);
+                    Post post = new Post(Integer.parseInt(postId), courseName, name, message, time);
                     Log.i("name op ", name);
                     Log.i("post id op ", postId);
 
                     if(post.getCourseName().equals(CourseListActivity.clickedCourseName)){
-                        postList.add(post.getName() + " : " + post.getMessage());
+                        postList.add(post.getName() + " : " + post.getMessage()+ "\r\n"+ post.getTimestamp());
 
                     }else{
                         continue;
@@ -152,9 +185,9 @@ public class ForumActivity extends Activity implements OnClickListener {
             ListView listView;
             ArrayAdapter arrayAdapter;
             listView = (ListView) findViewById(R.id.listView3);
-            arrayAdapter = new ArrayAdapter<String>(ForumActivity.this, R.layout.simplerow, postList);
+            arrayAdapter = new ArrayAdapter<String>(ForumActivity.this, R.layout.simplerow_green, postList);
             listView.setAdapter(arrayAdapter);
-            new Name().execute();
+
         }
 
     }
@@ -178,7 +211,7 @@ public class ForumActivity extends Activity implements OnClickListener {
                     String  latitude = c.getString("latitude");
 
                     user user = new com.example.atila.studentcommunicator.models.user(email, name, Double.parseDouble(longitude), Double.parseDouble(latitude));
-                    if(user.getEmail().equals(LoginActivity.loginEmail)) {
+                    if(user.getEmail().equals(LoginActivity.prefs.getString("email",""))) {
                        userName = user.getName();
                         Log.i("email kaldes også! ", userName);
                     }else{

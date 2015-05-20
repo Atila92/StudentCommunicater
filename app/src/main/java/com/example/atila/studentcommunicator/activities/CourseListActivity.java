@@ -6,6 +6,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
@@ -67,7 +68,7 @@ public class CourseListActivity extends ActionBarActivity {
                     String email = c.getString("email");
 
                     Course course = new Course(courseName, Integer.parseInt(courseId));
-                    if(email.equals(LoginActivity.loginEmail)) {
+                    if(email.equals(LoginActivity.prefs.getString("email",""))) {
                         courseList.add(course.getName());
                     }
                 }

@@ -1,5 +1,6 @@
 package com.example.atila.studentcommunicator.activities;
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.app.Service;
 import android.content.Intent;
 import android.os.Handler;
@@ -14,6 +15,7 @@ import android.view.View.OnClickListener;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.Switch;
+import android.widget.Toast;
 
 import com.example.atila.studentcommunicator.net.JSONParser;
 import com.example.atila.studentcommunicator.R;
@@ -38,6 +40,7 @@ public class MenuScreenActivity extends Activity implements OnClickListener {
     private Button signOutButton;
     private ImageView settings;
     private Switch locationSwitch;
+    public static boolean visibility = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,23 +73,35 @@ public class MenuScreenActivity extends Activity implements OnClickListener {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(isChecked){
                     startService(new Intent(getApplicationContext(), Updater.class));
+                    visibility= true;
+                    final ProgressDialog pd = new ProgressDialog(MenuScreenActivity.this);
+                    pd.setMessage("Finding provider..");
+                    pd.show();
+                    Handler handler = new Handler();
+                    handler.postDelayed(new Runnable() {
+                        public void run() {
+                            pd.dismiss();
+                            if(Updater.toast == true){
+                                Toast.makeText(MenuScreenActivity.this, "Slå lokalitets tjenester til!", Toast.LENGTH_LONG).show();
+                                locationSwitch.setChecked(false);
+                            }
+                        }}, 6000);
                 }
                 else {
                     stopService(new Intent(getApplicationContext(), Updater.class));
+                    visibility= false;
                     // Execute some code after 2 seconds have passed
                     Handler handler = new Handler();
-                    //Runnable runnable2 = new Runnable() {
                     handler.postDelayed(new Runnable() {
                         public void run() {
                             List<NameValuePair> params = new ArrayList<NameValuePair>();
                             params.add(new BasicNameValuePair("status", "0"));
-                            params.add(new BasicNameValuePair("email", LoginActivity.loginEmail));
+                            params.add(new BasicNameValuePair("email", LoginActivity.prefs.getString("email", "")));
                             JSONObject json = jsonParser.makeHttpRequest(
                                     URL, "POST", params);
-                            Log.i(TAG, "status set -->" );
+                            Log.i(TAG, "status set -->");
                         }
-                    },2000);
-                    //new Thread(runnable2).start();
+                    }, 2000);
                 }
             }
         });
@@ -96,7 +111,6 @@ public class MenuScreenActivity extends Activity implements OnClickListener {
     protected void onResume() {
         super.onResume();
     }
-    //public boolean buttonColor =true;
     public void onClick(View v) {
         switch (v.getId()) {
 
@@ -108,7 +122,6 @@ public class MenuScreenActivity extends Activity implements OnClickListener {
             case R.id.forumButton:
                 Intent l = new Intent(MenuScreenActivity.this, CourseListActivity.class);
                 startActivity(l);
-
                 break;
 
             case R.id.listButton:
